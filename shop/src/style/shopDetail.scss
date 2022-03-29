@@ -1,0 +1,32 @@
+.shop-detail{
+  padding: 40px 0;
+  .shop-detail-wraapper{
+    border: 1px solid $borderColor;
+    border-radius: 5px;
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+    .detail-box{
+      width: 25%;
+      display: flex;
+      padding: 0 20px;
+      &:not(:first-child){
+        border-left: 1px solid $borderColor;
+      }
+      .icon{
+        font-size: 40px;
+        margin-right: 20px;
+      }
+      h6{
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      p{
+        font-size: 12px;
+        margin-top: 7px;
+        color: rgb(204, 204, 204);
+      }
+    }
+  }
+}

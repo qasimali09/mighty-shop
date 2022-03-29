@@ -1,0 +1,7 @@
+
+# Dependency directories
+admin/node_modules/
+api/node_modules/
+shop/node_modules/
+admin/build/
+shop/build/
