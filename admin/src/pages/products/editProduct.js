@@ -8,6 +8,7 @@ import axios from "../../utils/axios";
 import { toast } from "react-toastify";
 import Loader from "../../components/loader";
 import { useParams } from 'react-router-dom';
+import ReactTagInput from "@pathofdev/react-tag-input";
 
 const EditProduct = () => {
   const params = useParams();
@@ -26,6 +27,7 @@ const EditProduct = () => {
     isSale: false,
     sale: "",
     published: true,
+    colors: []
   });
 
   const handleImageUpload = async (e) => {
@@ -121,7 +123,7 @@ const EditProduct = () => {
       setcategories(newData);
 
       const product = await axios.get("/api/products/" + params.id);
-      setstate({...state, ...product.data});
+      setstate({...state, ...product.data,colors:product?.data?.options?.colors || []});
       console.log(product.data);
     } catch (error) {
       console.log(error);
@@ -250,6 +252,13 @@ const EditProduct = () => {
           <div className="detail-box">
             <h6>categories</h6>
             <Select value={state.category} onChange={e => setstate({...state, category: e})} options={categories} />
+          </div>
+          <div className="detail-box">
+            <h6>Color options</h6>
+            <ReactTagInput 
+              tags={state.colors} 
+              onChange={(e) => setstate({...state, colors: e})}
+            />
           </div>
           <div className="detail-box">
             <h6>thumbnail</h6>

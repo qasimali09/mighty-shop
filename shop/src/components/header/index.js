@@ -2,7 +2,7 @@
 import React from "react";
 import logo from "../../images/logo.png";
 import { CgMenuGridO, CgSearch } from "react-icons/cg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { BsCart3 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import { TOGGLE_CART, LOGOUT } from "../../store/constants";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const showCart = () => {
     dispatch({ type: TOGGLE_CART, payload: true });
   };
@@ -19,6 +20,15 @@ const Header = () => {
   const logout = () => {
     localStorage.removeItem("token");
     dispatch({ type: LOGOUT });
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const search = e.target.search.value;
+    if (search.length > 0) {
+      e.target.search.value = "";
+      navigate(`/search/${search}`);
+    }
   };
 
   return (
@@ -44,7 +54,7 @@ const Header = () => {
             </ul>
           </div>
         </div>
-        <form className="search-form">
+        <form onSubmit={handleSearch} className="search-form">
           <input
             type="text"
             name="search"

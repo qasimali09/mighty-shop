@@ -1,26 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import GallerySlider from '../components/sliders/gallerySlider';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { IoIosAdd, IoIosRemove } from "react-icons/io";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import { SET_CART } from '../store/constants';
+import axios from '../utils/axios';
 
 const Single = () => {
-  const { products } = useSelector((state) => state.DataReducer);
   const navigate = useNavigate();
   const [product, setproduct] = useState({});
   const { id } = useParams();
   const [count, setcount] = useState(0)
   const dispatch = useDispatch();
+  const [color, setcolor] = useState()
 
-  useEffect(() => {
-    const product = products.find((product) => product.slug === id || product._id === id);
-    if(!product) {
+  useEffect( async () => {
+    try {
+      if(id) {
+        const { data } = await axios.get(`/api/product/${id}`);
+        setproduct(data);
+      }
+    } catch (error) {
       navigate('/');
+      console.log(error.response);
     }
-    setproduct(product);
-  }, [id, products, navigate]);
+  }, [id]);
 
   const increment = () => {
     setcount(count + 1);
@@ -36,6 +42,11 @@ const Single = () => {
 
     if(product.quantity < count && product.quantity !== null) {
       toast.error(`Sorry, we don't have enough quantity for ${product.name}`);
+      return;
+    }
+
+    if(product?.options?.colors.length > 0 && !color) {
+      toast.error(`Please select a color for ${product.name}`);
       return;
     }
 
@@ -63,7 +74,8 @@ const Single = () => {
         name: product.name,
         price: product.price,
         count: count,
-        thumbnail: product.thumbnail
+        thumbnail: product.thumbnail,
+        color: color,
       }
       cartProducts.push(newCartproduct);
     }
@@ -87,6 +99,17 @@ const Single = () => {
             <h2 className='price'>$ {product?.price}</h2>
             <hr />
             <p className='desc'>{product?.shortDesc}</p>
+            <div className="colors">
+              <p>Colors:</p>
+              <div className="color-wrapper">
+                {product?.options?.colors?.map((color, index) => (
+                  <div className="option-radio" key={index}>
+                    <input onChange={(e) => setcolor(e.target.value)} name='color' value={color} type="radio" id={`colorOption-${index}`} />
+                    <label htmlFor={`colorOption-${index}`} style={{ backgroundColor: color }}>{color}</label>
+                  </div>
+                ))}
+              </div>
+            </div>
             <p className="stock">available stock: <span>{product?.quantity || 'unlimeted'}</span></p>
             <div className="product-counter">
               <span onClick={decrement} className='remove'><IoIosRemove /></span>

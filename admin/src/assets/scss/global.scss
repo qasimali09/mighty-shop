@@ -218,6 +218,10 @@ input:-webkit-autofill:active {
     border-radius: 0 0 5px 5px;
 }
 
+.apexcharts-menu-item{
+    white-space: nowrap;
+}
+
 .btn {
     border-radius: 5px;
     padding: 7px 15px;
@@ -295,6 +299,22 @@ input:-webkit-autofill:active {
 
 .Toastify__close-button--light{
     color: #ffffff !important;
+}
+
+.react-tag-input{
+    background: none;
+    border: 0;
+    padding: 0;
+    input{
+        margin-top: 10px;
+    }
+    .react-tag-input__tag{
+        background-color: rgba($color: $color, $alpha: 1.0);
+        color: #ffffff;
+    }
+    .react-tag-input__tag__remove{
+        background-color: #d5d2d27a;
+    }
 }
 
 @keyframes loader {

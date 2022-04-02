@@ -7,8 +7,8 @@ const Products = require('../models/products.model');
 router.post('/products', authorizeAdmin, async (req, res) => {
   try {
 
-    const { name, sku, quantity, sale, published, price, desc, shortDesc, thumbnail, gallery, category, isSale } = req.body;
-
+    const { name, sku, quantity, sale, colors, published, price, desc, shortDesc, thumbnail, gallery, category, isSale } = req.body;
+    console.log(colors)
     if(!name || !price || !thumbnail) {
       return res.status(400).json({
         message: "Missing required fields"
@@ -39,6 +39,9 @@ router.post('/products', authorizeAdmin, async (req, res) => {
       thumbnail,
       gallery : gallery || [],
       category : category || {},
+      options: {
+        colors: colors || [],
+      }
     });
 
     res.status(201).json({
@@ -59,13 +62,15 @@ module.exports = router;
 router.put('/products', authorizeAdmin, async (req, res) => {
   try {
 
-    const {_id, name, sku, quantity, sale, published, price, desc, thumbnail, shortDesc, gallery, category, isSale } = req.body;
+    const {_id, name, sku, colors, quantity, sale, published, price, desc, thumbnail, shortDesc, gallery, category, isSale } = req.body;
 
     if(!_id, !name || !price || !thumbnail) {
       return res.status(400).json({
         message: "Missing required fields"
       });
     }
+
+    console.log(colors)
     
     const product = await Products.findOneAndUpdate({ _id: _id }, {
       name,
@@ -80,6 +85,9 @@ router.put('/products', authorizeAdmin, async (req, res) => {
       thumbnail,
       gallery : gallery || [],
       category : category || {},
+      options: {
+        colors: colors || [],
+      }
     });
 
     console.log(_id)
@@ -199,6 +207,31 @@ router.put('/products/featured', authorizeAdmin, async (req, res) => {
     res.status(500).json({  message: 'Internal Server Error', error });
   }
 });
+
+router.get('/product/:key', async (req, res) => {
+  try {
+    const { key } = req.params;
+
+    if(!key) {
+      return res.status(400).json({
+        message: "Missing required fields"
+      });
+    }
+
+    const product = await Products.findOne({ slug: key });
+    if(product) {
+      return res.status(200).json(product);
+    }
+
+    return res.status(404).json({
+      message: "Product not found"
+    });
+    
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({  message: 'Internal Server Error', error });
+  }
+})
 
 
 module.exports = router;

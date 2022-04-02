@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React from 'react';
-import paymentMethods from '../../images/payment.webp';
-import { GrFacebookOption, GrInstagram, GrTwitter } from "react-icons/gr";
+import paymentMethods from '../../images/payment.png';
+import { GrFacebookOption, GrInstagram } from "react-icons/gr";
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -15,9 +16,8 @@ const Footer = () => {
           <div className="social">
             <h4>Follow Us:</h4>
             <ul className="social-links">
-              <li><a className='fb' href="/" target='_blank'><GrFacebookOption /></a></li>
-              <li><a className='insta' href="/" target='_blank'><GrInstagram /></a></li>
-              <li><a className='twitter' href="/" target='_blank'><GrTwitter /></a></li>
+              <li><a className='fb' href="https://www.facebook.com/Balon-express-1541560769431700/" target='_blank'><GrFacebookOption /></a></li>
+              <li><a className='insta' href="https://www.instagram.com/balon_express" target='_blank'><GrInstagram /></a></li>
             </ul>
           </div>
         </div>

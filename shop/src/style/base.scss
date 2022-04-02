@@ -303,6 +303,26 @@ h1,h2,h3,h4,h5,h6{
     padding-bottom: 50px;
 }
 
+.lg-react-element{
+    max-width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 30px
+}
+
+.lg-react-element a{
+    display: block;
+}
+
+.lg-react-element a img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
 @keyframes loader {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -311,5 +331,12 @@ h1,h2,h3,h4,h5,h6{
 @media (max-width: 1024px) {
     .container {
         max-width: 900px;
+    }
+}
+
+@media(max-width:767px){
+    .container{
+        padding-left: 15px;
+        padding-right: 15px;
     }
 }

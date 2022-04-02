@@ -20,12 +20,22 @@ const Register = () => {
     confirmPassword: "",
   });
   const handleSubmit = async (e) => {
+    if(state.password !== state.confirmPassword){
+      toast.error("Password not match")
+      return
+    }
+
+    if(state.password.length < 6){
+      toast.error("Password must be at least 6 characters")
+      return
+    }
+    
     e.preventDefault();
     dispatch({ type: AUTH_LOADING_ON });
     try {
-      const { data } = await axios.post("/api/login", state);
+      const { data } = await axios.post("/api/register", state);
       localStorage.setItem("token", data?.token || null);
-      toast.success("Login Successful");
+      toast.success("Register Successful");
       dispatch({ type: SET_USER, payload: data?.user || null });
       dispatch({ type: AUTH_LOADING_OFF });
     } catch (error) {
@@ -97,7 +107,7 @@ const Register = () => {
           </button>
         ) : (
           <button type="submit" className="btn">
-            login
+            register
           </button>
         )}
         <p className="bottom">

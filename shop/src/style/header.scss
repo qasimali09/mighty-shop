@@ -169,3 +169,13 @@
       }
   }
 }
+
+@media(max-width:767px){
+  .cateories-dropdown{
+    display: none;
+  }
+
+  .header .search-form{
+    display: none;
+  }
+}

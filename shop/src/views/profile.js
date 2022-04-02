@@ -14,7 +14,7 @@ const Profile = () => {
   const { orders } = useSelector((e) => e.DataReducer);
   const naviagete = useNavigate();
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuth && !localStorage.getItem("token")) {
       toast.error("Please login first");
       naviagete("/login");
     }

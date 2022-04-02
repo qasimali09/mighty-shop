@@ -16,6 +16,7 @@ import Category from './views/category';
 import NotFound from './views/404';
 import Checkout from './views/checkout';
 import Profile from './views/profile';
+import Search from './views/search';
 
 function App() {
   const dispatch = useDispatch();
@@ -46,8 +47,9 @@ function App() {
         <Route path='/:id' element={<Single />} />
         <Route path='/category/:category' element={<Category />} />
         <Route path='/checkout' element={<Checkout />} />
-        <Route path='*' element={<NotFound />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/search/:search' element={<Search />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
       <Footer />
     </div>

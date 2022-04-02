@@ -16,8 +16,17 @@ const CategoriesSlider = () => {
               spaceBetween={30}
               modules={[Navigation]}
               navigation
-              slidesPerView={7}
-              loop={true}>
+              slidesPerView={3}
+              loop={true}
+              breakpoints={{
+                767: {
+                  slidesPerView: 5,
+                },
+                1024: {
+                  slidesPerView: 7,
+                },
+              }}
+              >
               {categories.map((category, index) => (
                 <SwiperSlide key={index}>
                   <Link

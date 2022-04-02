@@ -7,6 +7,7 @@ import axios from "../../utils/axios";
 import { toast } from "react-toastify";
 import Loader from "../../components/loader";
 import { useNavigate } from "react-router-dom";
+import ReactTagInput from "@pathofdev/react-tag-input";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const AddProduct = () => {
     isSale: false,
     sale: "",
     published: true,
+    colors: []
   });
 
   const handleImageUpload = async (e) => {
@@ -247,6 +249,13 @@ const AddProduct = () => {
             <Select
               onChange={(e) => setstate({ ...state, category: e })}
               options={categories}
+            />
+          </div>
+          <div className="detail-box">
+            <h6>Color options</h6>
+            <ReactTagInput 
+              tags={state.colors} 
+              onChange={(e) => setstate({...state, colors: e})}
             />
           </div>
           <div className="detail-box">

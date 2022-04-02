@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 const ProductBox = ({product}) => {
   return (
     <div className="product-box">
-      <div className="thumbnail">
+      <Link to={`/${product.slug}`} className="thumbnail">
         <img src={product.thumbnail} alt="product" />
-      </div>
+      </Link>
       <div className="content">
         <h4>{product.name}</h4>
         <div className="bottom">

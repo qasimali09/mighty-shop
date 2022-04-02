@@ -15,7 +15,7 @@ const Checkout = () => {
   const naviagete = useNavigate();
   const { isAuth } = useSelector((e) => e.AuthReducer);
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuth && !localStorage.getItem("token")) {
       toast.error("Please login to place order");
       naviagete('/login');
     }
@@ -71,6 +71,7 @@ const Checkout = () => {
       dispatch({ type: SET_CART, payload: [] });
       localStorage.setItem("cartProducts", JSON.stringify([]));
       setLoading(false);
+      naviagete("/");
     } catch (error) {
       setLoading(false);
       if(error.response) {
