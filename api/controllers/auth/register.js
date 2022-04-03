@@ -21,7 +21,7 @@ module.exports.register = async (req, res) => {
         //check data validation errors
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            return res.status(403).json({message: "Please send correct data",errors:errors?.errors})
+            return res.status(403).json({message: "Please send correct data",errors:errors})
         }
 
         // if user exist
