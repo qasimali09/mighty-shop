@@ -55,7 +55,7 @@ router.post('/upload-image', authorizeAdmin,  upload.single('img'), async  (req,
     //check image exist or not
     const checkImage = await Images.findOne({ name:originalname });
     if (checkImage) {
-      fs.rmSync(`./uploads/${filename}`);
+      
       return res.status(200).json({url: fullUrl + '/images/' + checkImage.filename});
     }
 
