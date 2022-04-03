@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
-import { Helmet } from "react-helmet";
 import { useSelector, useDispatch } from "react-redux";
 import Moment from 'react-moment';
 import 'moment-timezone';
@@ -28,9 +27,6 @@ const Profile = () => {
   }, [orders]);
   return (
     <div className="profile-page">
-      <Helmet>
-        <title>Profile - Mighty coders</title>
-      </Helmet>
       <div className="container">
         <h2>👋 Hi {user.name}! - Your orders</h2>
         <div className="orders">

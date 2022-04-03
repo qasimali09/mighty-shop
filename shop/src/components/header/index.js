@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import logo from "../../images/logo.png";
 import { CgMenuGridO, CgSearch } from "react-icons/cg";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
@@ -35,8 +34,8 @@ const Header = () => {
     <header className="header">
       <div className="container">
         <div className="left-side">
-          <Link to="/">
-            <img src={logo} alt="logo" />
+          <Link className="logo" to="/">
+            BALON <span>EXPRESS</span>
           </Link>
           <div className="cateories-dropdown">
             <button>

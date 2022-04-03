@@ -63,3 +63,17 @@
     margin-top: 0;
   }
 }
+
+@media(max-width:950px){
+  .checkout .shipping-address-form{
+    flex-direction: column;
+  }
+
+  .checkout .shipping-address-form .left-side{
+    width: 100%;
+  }
+
+  .checkout .shipping-address-form .right-side{
+    width: 100%;
+  }
+}

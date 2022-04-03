@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
 import axios from "../utils/axios";
 import { toast } from "react-toastify";
@@ -8,16 +7,18 @@ import { useDispatch } from "react-redux";
 import { SET_CART } from "../store/constants";
 import Loader from "../components/loader";
 import { useNavigate } from "react-router-dom";
-import ShopingDetail from '../components/shopDetail';
+import ShopingDetail from "../components/shopDetail";
+import { PayPalButton } from "react-paypal-button-v2";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const naviagete = useNavigate();
+  const [amount, setamount] = useState(20);
   const { isAuth } = useSelector((e) => e.AuthReducer);
   useEffect(() => {
     if (!isAuth && !localStorage.getItem("token")) {
       toast.error("Please login to place order");
-      naviagete('/login');
+      naviagete("/login");
     }
   }, [isAuth, naviagete]);
   const [loading, setLoading] = useState(false);
@@ -39,11 +40,26 @@ const Checkout = () => {
     setcartProducts(cart);
   }, [cart]);
 
+  useEffect(() => {
+    if (cartProducts.length > 0) {
+      setamount(
+        cartProducts.reduce((a, b) => {
+          return a + b.price * b.count;
+        }, 0)
+      );
+    }
+  }, [cartProducts]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     if (cart.length < 1) {
       toast.error("Your cart is empty");
+      return;
+    }
+
+    if(shiping.paymentMethod === ""){
+      toast.error("Please select payment method");
       return;
     }
 
@@ -60,10 +76,7 @@ const Checkout = () => {
         zip: shiping.zip,
       },
       paymentMethod: shiping.paymentMethod,
-      amount: cartProducts.reduce(
-        (total, product) => total + product.price * product.count,
-        0
-      ),
+      amount: amount,
     };
     try {
       const response = await axios.post("/api/orders", order);
@@ -74,7 +87,7 @@ const Checkout = () => {
       naviagete("/");
     } catch (error) {
       setLoading(false);
-      if(error.response) {
+      if (error.response) {
         toast.error(error.response?.data.message);
         console.log(error.response?.data);
         return;
@@ -86,9 +99,6 @@ const Checkout = () => {
 
   return (
     <div className="checkout">
-      <Helmet>
-        <title>Checkout - Mighty Shop</title>
-      </Helmet>
       <div className="container">
         <form onSubmit={handleSubmit} className="shipping-address-form">
           <div className="left-side">
@@ -233,14 +243,28 @@ const Checkout = () => {
                   id="payment-method-1"
                   name="payment-method"
                   value="cod"
-                  required
                   onChange={(e) =>
                     setShiping({ ...shiping, paymentMethod: e.target.value })
                   }
                 />
                 <label htmlFor="payment-method-1">cash on delivery</label>
               </div>
-              <p>Pay with cash upon delivery.</p>
+              <p style={{ marginBottom: "20px" }}>
+                Pay with cash upon delivery.
+              </p>
+              {cart.length > 0 && (
+                <PayPalButton
+                  amount={amount}
+                  // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+                  onSuccess={(details, data) => {
+                    setShiping({ ...shiping, paymentMethod: "paypal" });
+                    toast.success("Payment Successful");
+                  }}
+                  onError={(error) => {
+                    console.log(error);
+                  }}
+                />
+              )}
             </div>
             {loading ? (
               <button disabled className="btn order-place-btn">

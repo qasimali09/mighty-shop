@@ -1,5 +1,4 @@
 const Users = require('../../models/user.model');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
@@ -13,15 +12,8 @@ module.exports.login = async (req, res) => {
         }
 
         // if user exist
-        const checkUser = await Users.findOne({email})
+        const checkUser = await Users.findOne({email,password})
         if(!checkUser){
-            return res.status(400).json({message: "User not exist!"});
-        }
-
-        //create hashed password using bcrypt
-        const hashedPassword = await bcrypt.compare(password, checkUser.password);
-
-        if(!hashedPassword){
             return res.status(400).json({message: "User not exist!"});
         }
 

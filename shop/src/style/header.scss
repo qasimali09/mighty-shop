@@ -15,6 +15,16 @@
   .left-side{
     display: flex;
     align-items: center;
+    .logo{
+      font-family: 'Rubik Wet Paint', cursive;
+      font-size: 30px;
+      text-decoration: none !important;
+      color: #9b4141;
+      span{
+        font-family: 'Rubik Wet Paint', cursive;
+        color: #1f8188;
+      }
+    }
   }
 
   .search-form{
@@ -22,6 +32,7 @@
     width: 100%;
     align-items: center;
     max-width: 300px;
+    margin: 0 20px;
     & > button{
       font-size: 25px;
       display: flex;
@@ -177,5 +188,9 @@
 
   .header .search-form{
     display: none;
+  }
+
+  .header .left-side .logo{
+    font-size: 20px;
   }
 }

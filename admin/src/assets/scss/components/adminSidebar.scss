@@ -36,6 +36,13 @@
     padding: 25px 20px;
     border-bottom: 1px solid $borderColor;
     height: 81px;
+    img{
+        height: 40px;
+        width: 40px;
+        object-fit: contain;
+        margin-right: 15px;
+        border-radius: 10px;
+    }
 }
 
 .sidebar-nav > li > a{

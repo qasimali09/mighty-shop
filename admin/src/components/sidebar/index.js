@@ -19,7 +19,7 @@ const Sidebar = ({ setshowSidebar, showSidebar }) => {
       <div onClick={() => setshowSidebar(false)} className={`sidebaroverlay ${showSidebar && 'showOnMobile'}`}></div>
       <div className={`admin__sidebar ${showSidebar && 'showOnMobile'}`}>
         <div className="admin_logo">
-          <BsShop className="icon" />E - shoping
+          <img src="/logo.jpg" alt="" /> Balon express
         </div>
         <ul className="sidebar-nav">
           {Routes.map((route, index) => {

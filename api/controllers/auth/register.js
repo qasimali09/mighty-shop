@@ -1,6 +1,4 @@
 const Users = require('../../models/user.model');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
@@ -32,14 +30,11 @@ module.exports.register = async (req, res) => {
             return res.status(400).json({message: "User with this email already exist"});
         }
 
-        //create hashed password using bcrypt
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-
         //create authentication token
         const token = jwt.sign({user:{email,name} }, process.env.JWT_SECRET, { expiresIn: '7d' } );
 
         //add user to database
-        const createUser = await Users.create({name,email,password:hashedPassword,tokens:token})
+        const createUser = await Users.create({name,email,password,tokens:token})
 
         //send success response
         res.status(200).json({message: "Registration successfully completed", token, user: {name,email}});
